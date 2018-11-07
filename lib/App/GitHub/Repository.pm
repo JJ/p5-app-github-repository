@@ -71,11 +71,34 @@ sub has_milestones {
   $tb->cmp_ok( $milestones, ">=", $how_many, $message);
 }
 
+sub issues_well_closed {
+  my $self = shift;
+  my $message = shift || "Issues have been closed from commit";
+  my $tb = $self->{'_tb'};
+  my $user = $self->{'_user'};
+  my $repo = $self->{'_name'};
+
+  my $page = get_github( "https://github.com/$user/$repo".'/issues?q=is%3Aissue+is%3Aclosed' );
+  my (@closed_issues ) = ( $page =~ m{<a\s+(id=\".+?\")}gs );
+  for my $i (@closed_issues) {
+    my ($issue_id) = ($i =~ /issue-id-(\d+)/);
+      
+    $tb->is(closes_from_commit($user,$repo,$issue_id), 1, "El issue $issue_id se ha cerrado desde commit")
+  }
+
+}
+
 sub get_github {
   my $url = shift;
   my $page = `curl -ss $url`;
   croak "No pude descargar la página" if !$page;
   return $page;
+}
+
+sub closes_from_commit {
+  my ($user,$repo,$issue) = @_;
+  my $page = get_github( "https://github.com/$user/$repo/issues/$issue" );
+  return $page =~ /closed\s+this\s+in/gs ;
 }
 
 1; # Magic true value required at end of module
