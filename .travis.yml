@@ -11,7 +11,9 @@ perl:
   - "5.26"
 
 before_install: "cpanm App::mymeta_requires"
+
 install:
   - perl Makefile.PL
   - mymeta-requires | cpanm
+
 script: "make disttest"

@@ -5,7 +5,6 @@ use strict;
 use Carp;
 
 use Git;
-use Mojo::UserAgent;
 use File::Slurper qw(read_text);
 use JSON;
 use parent 'Test::Builder::Module'; # Included in Test::Simple
