@@ -8,6 +8,7 @@ use Git;
 use Mojo::UserAgent;
 use File::Slurper qw(read_text);
 use JSON;
+use parent 'Test::Builder::Module'; # Included in Test::Simple
 
 use version; our $VERSION = qv('0.0.3');
 
@@ -26,10 +27,12 @@ sub new {
   my $tmp_dir = shift || "/tmp";
   croak "$repo is not a GitHub repo" if ( $repo !~ /github/);
   my ($user,$name) = ($repo=~ /github.com\/(\S+)\/([^\.]+)/);
-  my $self = { _repo => $repo,
+  my $self = {_tb => __PACKAGE__->builder,
+	      _repo => $repo,
 	       _user => $user,
 	       _name => $name };
-  my $repo_dir =  $tmp_dir/$user-$name;
+  my $repo_dir =  "$tmp_dir/$user-$name";
+  `rm -rf $repo_dir` if -d $repo_dir;
   `git clone $repo $repo_dir`;
   croak "Couldn't download repo" if !(-d $repo_dir);
   my $student_repo =  Git->repository ( Directory => $repo_dir );
@@ -41,6 +44,20 @@ sub new {
   return $self;
 }
 
+sub has_readme {
+  my $self = shift;
+  my $message = shift || "Has README.md";
+  my $tb = $self->{'_tb'};
+  $tb->ok( $self->{'_README'} ne '', $message );
+}
+
+sub has_file{
+  my $self = shift;
+  my $file = shift || croak "No file";
+  my $message = shift || "Includes file $file";
+  my $tb = $self->{'_tb'};
+  $tb->ok( grep(@{$self->{'_repo_files'}}, $file) , $message );
+}
 
 1; # Magic true value required at end of module
 __END__
