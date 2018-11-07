@@ -9,7 +9,7 @@ use Mojo::UserAgent;
 use File::Slurper qw(read_text);
 use JSON;
 
-use version; $VERSION = qv('0.0.3');
+use version; our $VERSION = qv('0.0.3');
 
 # Other recommended modules (uncomment to use):
 #  use IO::Prompt;
@@ -21,14 +21,24 @@ use version; $VERSION = qv('0.0.3');
 # Module implementation here
 
 sub new {
+  my $class = shift;
   my $repo = shift;
   my $tmp_dir = shift || "/tmp";
   croak "$repo is not a GitHub repo" if ( $repo !~ /github/);
-  my ($user,$name) = ($url_repo=~ /github.com\/(\S+)\/([^\.]+)/);
+  my ($user,$name) = ($repo=~ /github.com\/(\S+)\/([^\.]+)/);
   my $self = { _repo => $repo,
 	       _user => $user,
 	       _name => $name };
-  Git->command_oneline("clone $repo $tmp_dir");
+  my $repo_dir =  $tmp_dir/$user-$name;
+  `git clone $repo $repo_dir`;
+  croak "Couldn't download repo" if !(-d $repo_dir);
+  my $student_repo =  Git->repository ( Directory => $repo_dir );
+  my @repo_files = $student_repo->command("ls-files");
+  $self->{'_repo_dir'} = $repo_dir;
+  $self->{'_repo_files'} = \@repo_files;
+  $self->{'_README'} =  read_text( "$repo_dir/README.md");
+  bless $self, $class;
+  return $self;
 }
 
 
