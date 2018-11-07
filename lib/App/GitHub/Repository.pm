@@ -83,7 +83,7 @@ sub issues_well_closed {
   for my $i (@closed_issues) {
     my ($issue_id) = ($i =~ /issue-id-(\d+)/);
       
-    $tb->is(closes_from_commit($user,$repo,$issue_id), 1, "El issue $issue_id se ha cerrado desde commit")
+    $tb->ok(closes_from_commit($user,$repo,$issue_id),"El issue $issue_id se ha cerrado desde commit")
   }
 
 }
