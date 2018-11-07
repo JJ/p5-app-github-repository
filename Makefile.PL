@@ -7,6 +7,7 @@ WriteMakefile(
     AUTHOR              => 'JJ Merelo <jjmerelo@gmail.com>',
     VERSION_FROM        => 'lib/App/GitHub/Repository.pm',
     ABSTRACT_FROM       => 'lib/App/GitHub/Repository.pm',
+    LICENSE             => 'perl_5',
     PL_FILES            => {},
     PREREQ_PM => {
 		  'Test::More' => 0,
