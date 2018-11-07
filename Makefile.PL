@@ -14,7 +14,8 @@ WriteMakefile(
 		  'File::Slurper' => 0,
 		  'JSON'       => 0,
 		  'version'    => 0,
-		  'Test::Builder::Module' => 0
+		  'Test::Builder::Module' => 0,
+		  'Test::Perl::Critic' => 0
     },
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean               => { FILES => 'App-GitHub-Repository-*' },
