@@ -29,8 +29,8 @@ sub new {
   my ($user,$name) = ($repo=~ /github.com\/(\S+)\/([^\.]+)/);
   my $self = {_tb => __PACKAGE__->builder,
 	      _repo => $repo,
-	       _user => $user,
-	       _name => $name };
+	      _user => $user,
+	      _name => $name };
   my $repo_dir =  "$tmp_dir/$user-$name";
   `rm -rf $repo_dir` if -d $repo_dir;
   `git clone $repo $repo_dir`;
@@ -57,6 +57,25 @@ sub has_file{
   my $message = shift || "Includes file $file";
   my $tb = $self->{'_tb'};
   $tb->ok( grep(@{$self->{'_repo_files'}}, $file) , $message );
+}
+
+sub has_milestones {
+  my $self = shift;
+  my $how_many = shift || 1;
+  my $message = shift || "Has $how_many milestones";
+  my $tb = $self->{'_tb'};
+  my $user = $self->{'_user'};
+  my $repo = $self->{'_name'};
+  my $page = get_github( "https://github.com/$user/$repo/milestones" );
+  my ($milestones ) = ( $page =~ /(\d+)\s+Open/);
+  $tb->cmp_ok( $milestones, ">=", $how_many, $message);
+}
+
+sub get_github {
+  my $url = shift;
+  my $page = `curl -ss $url`;
+  croak "No pude descargar la página" if !$page;
+  return $page;
 }
 
 1; # Magic true value required at end of module
