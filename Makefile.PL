@@ -2,6 +2,20 @@ use strict;
 use warnings;
 use ExtUtils::MakeMaker;
 
+my %make;
+if ($ExtUtils::MakeMaker::VERSION > 6.64) {
+   $make{META_MERGE} = {
+    'meta-spec' => { version => 2 },
+        resources => {
+            repository => {
+                type => 'git',
+                url  => 'https://github.com/JJ/p5-app-github-repository.git',
+                web  => 'https://github.com/JJ/p5-app-github-repository',
+            },
+        },
+    };
+}
+
 WriteMakefile(
     NAME                => 'App::GitHub::Repository',
     AUTHOR              => 'JJ Merelo <jjmerelo@gmail.com>',
@@ -20,4 +34,5 @@ WriteMakefile(
     },
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean               => { FILES => 'App-GitHub-Repository-*' },
+    %make,
 );
