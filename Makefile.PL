@@ -9,8 +9,12 @@ WriteMakefile(
     ABSTRACT_FROM       => 'lib/App/GitHub/Repository.pm',
     PL_FILES            => {},
     PREREQ_PM => {
-        'Test::More' => 0,
-        'version'    => 0,
+		  'Test::More' => 0,
+		  'Git'        => 0,
+		  'File::Slurper' => 0,
+		  'JSON'       => 0,
+		  'version'    => 0,
+		  'Test::Builder::Module' => 0
     },
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean               => { FILES => 'App-GitHub-Repository-*' },
