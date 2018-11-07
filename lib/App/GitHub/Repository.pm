@@ -4,6 +4,11 @@ use warnings;
 use strict;
 use Carp;
 
+use Git;
+use Mojo::UserAgent;
+use File::Slurper qw(read_text);
+use JSON;
+
 use version; $VERSION = qv('0.0.3');
 
 # Other recommended modules (uncomment to use):
@@ -14,6 +19,17 @@ use version; $VERSION = qv('0.0.3');
 
 
 # Module implementation here
+
+sub new {
+  my $repo = shift;
+  my $tmp_dir = shift || "/tmp";
+  croak "$repo is not a GitHub repo" if ( $repo !~ /github/);
+  my ($user,$name) = ($url_repo=~ /github.com\/(\S+)\/([^\.]+)/);
+  my $self = { _repo => $repo,
+	       _user => $user,
+	       _name => $name };
+  Git->command_oneline("clone $repo $tmp_dir");
+}
 
 
 1; # Magic true value required at end of module
