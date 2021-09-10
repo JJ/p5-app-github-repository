@@ -78,7 +78,7 @@ sub issues_well_closed {
   my $repo = $self->{'_name'};
 
   my $page = get_github( "https://github.com/$user/$repo".'/issues?q=is%3Aissue+is%3Aclosed' );
-  my (@closed_issues ) = ( $page =~ m{<a\s+(id=\".+?\")}gs );
+  my (@closed_issues ) = ( $page =~ m{<a\s+(id=\"issue_\d+_link\")}gs );
   for my $i (@closed_issues) {
     my ($issue_id) = ($i =~ /issue_(\d+)_link/);
 
