@@ -9,7 +9,7 @@ use File::Slurper qw(read_text);
 use JSON;
 use parent 'Test::Builder::Module'; # Included in Test::Simple
 
-use version; our $VERSION = qv('0.0.3');
+use version; our $VERSION = qv('0.0.4');
 
 # Other recommended modules (uncomment to use):
 #  use IO::Prompt;

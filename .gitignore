@@ -3,3 +3,5 @@ MYMETA*
 Makefile
 App-GitHub-Repository*/
 App-GitHub-Repository*.gz
+pm_to_blib
+blib/
