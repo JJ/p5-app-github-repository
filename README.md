@@ -23,7 +23,14 @@ If you're developing and installing dependencies locally.
 
 ## DEPENDENCIES
 
+It uses:
 
+- `Test::More`
+- `version`
+- `File::Slurper`
+- `JSON`
+- `Git`
+- `Test::Perl::Critic`
 
 
 ## COPYRIGHT AND LICENCE
