@@ -6,7 +6,7 @@ jobs:
     strategy:
       matrix:
         os: ["ubuntu-latest", "macos-latest", "windows-latest"]
-        perl: ["5.16","5.38", "5.34", "5.39"]
+        perl: ["5.16","5.38", "5.34"]
     name: Perl ${{ matrix.perl }} on ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
@@ -15,5 +15,5 @@ jobs:
         with:
           perl-version: ${{ matrix.perl }}
       - run: perl -V
-      - run: perl Build.PL && ./Build
+      - run: perl Build.PL && ./Build && ./Build installdeps
       - run: ./Build test
