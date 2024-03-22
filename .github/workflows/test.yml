@@ -18,7 +18,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: local
-          key: perl-${{ steps.perl.outputs.perl-hash }}
+          key: perl-${{ matrix.perl }-${{ matrix.os }}
       - run: perl -V
       - name: install needed modules
         uses: perl-actions/install-with-cpanm@stable
