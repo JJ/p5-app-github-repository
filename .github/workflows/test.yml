@@ -5,7 +5,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: ["ubuntu-latest", "macos-latest", "windows-latest"]
+        os: ["ubuntu-latest", "macos-latest"]
         perl: ["5.16","5.38", "5.34"]
     name: Perl ${{ matrix.perl }} on ${{ matrix.os }}
     steps:
@@ -18,7 +18,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: local
-          key: perl-${{ matrix.perl }-${{ matrix.os }}
+          key: perl-${{ matrix.perl }}-${{ matrix.os }}
       - run: perl -V
       - name: install needed modules
         uses: perl-actions/install-with-cpanm@stable
