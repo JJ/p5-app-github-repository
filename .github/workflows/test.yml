@@ -15,5 +15,9 @@ jobs:
         with:
           perl-version: ${{ matrix.perl }}
       - run: perl -V
+      - name: install cpanm and multiple modules
+        uses: perl-actions/install-with-cpanm@stable
+        with:
+          install: Module::Build
       - run: perl Build.PL && ./Build && ./Build installdeps
       - run: ./Build test
