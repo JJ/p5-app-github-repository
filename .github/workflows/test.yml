@@ -14,8 +14,13 @@ jobs:
         uses: shogo82148/actions-setup-perl@v1
         with:
           perl-version: ${{ matrix.perl }}
+      - name: Cache CPAN Modules
+        uses: actions/cache@v3
+        with:
+          path: local
+          key: perl-${{ steps.perl.outputs.perl-hash }}
       - run: perl -V
-      - name: install cpanm and multiple modules
+      - name: install needed modules
         uses: perl-actions/install-with-cpanm@stable
         with:
           install: Module::Build
