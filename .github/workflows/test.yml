@@ -23,6 +23,8 @@ jobs:
       - name: install needed modules
         uses: perl-actions/install-with-cpanm@stable
         with:
-          install: Module::Build
+          install: |
+            Module::Build
+            Test::Perl::Critic
       - run: perl Build.PL && ./Build && ./Build installdeps
       - run: ./Build test
