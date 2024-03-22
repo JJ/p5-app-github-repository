@@ -1,4 +1,4 @@
-# App-GitHub-Repository version 0.0.1
+# App::GitHub::Repository version 0.0.4 [![Test distro](https://github.com/JJ/p5-app-github-repository/actions/workflows/test.yml/badge.svg)](https://github.com/JJ/p5-app-github-repository/actions/workflows/test.yml)
 
 
 Checks things from repositories which are hosted in GitHub. Uses scraping for extracting information, so you don't have to use an API.
