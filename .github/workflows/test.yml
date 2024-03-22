@@ -1,0 +1,19 @@
+name: Test distro
+on: [ push, pull_request, pull_request_target]
+jobs:
+  build_and_test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: ["ubuntu-latest", "macos-latest", "windows-latest"]
+        perl: ["5.16","5.38", "5.34", "5.39"]
+    name: Perl ${{ matrix.perl }} on ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up perl
+        uses: shogo82148/actions-setup-perl@v1
+        with:
+          perl-version: ${{ matrix.perl }}
+      - run: perl -V
+      - run: perl Build.PL && ./Build
+      - run: ./Build test

@@ -8,8 +8,11 @@ my $builder = Module::Build->new(
     dist_author         => 'JJ Merelo <jjmerelo@gmail.com>',
     dist_version_from   => 'lib/App/GitHub/Repository.pm',
     requires => {
-        'Test::More' => 0,
-        'version'    => 0,
+                 'Test::More' => 0,
+                 'version'    => 0,
+                 'File::Slurper' => 0,
+                 'JSON' => 0,
+                 'Git' => 0,
     },
     add_to_cleanup      => [ 'App-GitHub-Repository-*' ],
 );

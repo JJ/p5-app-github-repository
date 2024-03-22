@@ -11,12 +11,6 @@ use parent 'Test::Builder::Module'; # Included in Test::Simple
 
 use version; our $VERSION = qv('0.0.4');
 
-# Other recommended modules (uncomment to use):
-#  use IO::Prompt;
-#  use Perl6::Export;
-#  use Perl6::Slurp;
-#  use Perl6::Say;
-
 
 # Module implementation here
 
