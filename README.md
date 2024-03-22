@@ -6,24 +6,24 @@ Checks things from repositories which are hosted in GitHub. Uses scraping for ex
 
 ## INSTALLATION
 
-To install this module, run the following commands:
-
-	perl Makefile.PL
-	make
-	make test
-	make install
-
-Alternatively, to install with Module::Build, you can use the following commands:
+It uses Module::Build for installation, so it goes like this
 
 	perl Build.PL
 	./Build
 	./Build test
 	./Build install
 
+Run
+
+```shell
+./Build installdeps
+```
+
+If you're developing and installing dependencies locally.
 
 ## DEPENDENCIES
 
-None.
+
 
 
 ## COPYRIGHT AND LICENCE
