@@ -3,7 +3,7 @@ package App::GitHub::Repository;
 use warnings;
 use strict;
 use Carp;
-use LWP::Simple;
+use Net::Curl::Easy qw(/^CURLOPT_/);
 
 use Git;
 use File::Slurper qw(read_text);
@@ -33,6 +33,8 @@ sub new {
   $self->{'_repo_dir'} = $repo_dir;
   $self->{'_repo_files'} = \@repo_files;
   $self->{'_README'} =  read_text( "$repo_dir/README.md");
+  $self->{'_CURL'} = Net::Curl::Easy->new();
+  $self->{'_CURL'}->setopt( CURLOPT_USERAGENT, "A::G::R v0.0.4" );
   bless $self, $class;
   return $self;
 }
@@ -59,7 +61,7 @@ sub has_milestones {
   my $tb = $self->{'_tb'};
   my $user = $self->{'_user'};
   my $repo = $self->{'_name'};
-  my $page = get_github( "https://github.com/$user/$repo/milestones" );
+  my $page = $self->get_github( "https://github.com/$user/$repo/milestones" );
   my ($milestones ) = ( $page =~ /(\d+)\s+Open/);
   $tb->cmp_ok( $milestones, ">=", $how_many, $message);
 }
@@ -71,7 +73,7 @@ sub issues_well_closed {
   my $user = $self->{'_user'};
   my $repo = $self->{'_name'};
 
-  my $page = get_github( "https://github.com/$user/$repo".'/issues?q=is%3Aissue+is%3Aclosed' );
+  my $page = $self->get_github( "https://github.com/$user/$repo".'/issues?q=is%3Aissue+is%3Aclosed' );
   my (@closed_issues ) = ( $page =~ m{<a\s+(id=\"issue_\d+_link\")}gs );
   for my $i (@closed_issues) {
     my ($issue_id) = ($i =~ /issue_(\d+)_link/);
@@ -82,8 +84,12 @@ sub issues_well_closed {
 }
 
 sub get_github {
+  my $self = shift;
   my $url = shift;
-  my $page = get $url;
+  $self->{'_CURL'}->setopt( CURLOPT_URL, $url );
+  my $res = $self->{'_CURL'}->perform();
+  say $res;
+  my $page = $res->body;
   croak "No pude descargar la página" if !$page;
   return $page;
 }
