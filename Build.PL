@@ -3,6 +3,7 @@ use warnings;
 use Module::Build;
 
 my $builder = Module::Build->new(
+    dist_abstract            => 'GitHub client, with some scraping functions',
     module_name         => 'App::GitHub::Repository',
     license             => 'artistic2',
     dist_author         => 'JJ Merelo <jjmerelo@gmail.com>',
