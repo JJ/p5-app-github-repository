@@ -37,6 +37,10 @@ It uses:
 As a binary dependency, `curl` needs to be installed on the system and available
 in the path
 
+## Version history
+
+- v0.0.5 fixes some bugs, and reduces binary dependency. Theoretically, it could
+  run in Windows too.
 
 ## COPYRIGHT AND LICENCE
 
