@@ -99,12 +99,11 @@ __END__
 
 =head1 NAME
 
-App::GitHub::Repository - [One line description of module's purpose here]
-
+App::GitHub::Repository - GitHub client, with some scraping functions
 
 =head1 VERSION
 
-This document describes App::GitHub::Repository version 0.0.1
+This document describes App::GitHub::Repository version 0.0.5.1
 
 
 =head1 SYNOPSIS
@@ -159,7 +158,7 @@ App::GitHub::Repository requires no configuration files or environment variables
 
 =head1 DEPENDENCIES
 
-The system needs to have `curl` installed and available.
+The system needs to have C<curl> installed and available.
 
 Use C<./Build installdeps> to install all dependencies>
 
@@ -185,7 +184,7 @@ JJ Merelo  C<< <jjmerelo@gmail.com> >>
 
 =head1 LICENCE AND COPYRIGHT
 
-Copyright (c) 2018, JJ Merelo C<< <jjmerelo@gmail.com> >>. All rights reserved.
+Copyright (c) 2018,2024, JJ Merelo C<< <jjmerelo@gmail.com> >>. All rights reserved.
 
 This module is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself. See L<perlartistic>.
