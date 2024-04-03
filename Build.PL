@@ -14,9 +14,8 @@ my $builder = Module::Build->new(
                  'File::Slurper' => 0,
                  'JSON' => 0,
                  'Git' => 0,
-                 'Test::Perl::Critic' => 0,
-                 'Net::Curl' => 0,
-    },
+                },
+    test_requires => { 'Test::Perl::Critic' => 0, },
     add_to_cleanup      => [ 'App-GitHub-Repository-*' ],
 );
 

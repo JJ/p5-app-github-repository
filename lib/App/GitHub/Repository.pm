@@ -3,7 +3,6 @@ package App::GitHub::Repository;
 use warnings;
 use strict;
 use Carp;
-use Net::Curl::Easy qw(/^CURLOPT_/);
 
 use Git;
 use File::Slurper qw(read_text);
@@ -33,8 +32,6 @@ sub new {
   $self->{'_repo_dir'} = $repo_dir;
   $self->{'_repo_files'} = \@repo_files;
   $self->{'_README'} =  read_text( "$repo_dir/README.md");
-  $self->{'_CURL'} = Net::Curl::Easy->new();
-  $self->{'_CURL'}->setopt( CURLOPT_USERAGENT, "A::G::R v0.0.4" );
   bless $self, $class;
   return $self;
 }
@@ -78,7 +75,7 @@ sub issues_well_closed {
   for my $i (@closed_issues) {
     my ($issue_id) = ($i =~ /issue_(\d+)_link/);
 
-    $tb->ok(closes_from_commit($user,$repo,$issue_id),"El issue $issue_id se ha cerrado desde commit")
+    $tb->ok($self->closes_from_commit($issue_id),"El issue $issue_id se ha cerrado desde commit")
   }
 
 }
@@ -86,17 +83,14 @@ sub issues_well_closed {
 sub get_github {
   my $self = shift;
   my $url = shift;
-  $self->{'_CURL'}->setopt( CURLOPT_URL, $url );
-  my $res = $self->{'_CURL'}->perform();
-  say $res;
-  my $page = $res->body;
+  my $page = `curl -ss $url`;
   croak "No pude descargar la página" if !$page;
   return $page;
 }
 
 sub closes_from_commit {
-  my ($user,$repo,$issue) = @_;
-  my $page = get_github( "https://github.com/$user/$repo/issues/$issue" );
+  my ($self,$issue) = @_;
+  my $page = $self->get_github( "https://github.com/" . $self->{'_user'} ."/" .$self->{'_repo'}."/issues/$issue" );
   return $page =~ /closed\s+this\s+in/gs ;
 }
 
@@ -164,6 +158,8 @@ App::GitHub::Repository requires no configuration files or environment variables
 
 
 =head1 DEPENDENCIES
+
+The system needs to have `curl` installed and available.
 
 Use C<./Build installdeps> to install all dependencies>
 
