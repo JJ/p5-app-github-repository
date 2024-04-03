@@ -21,7 +21,7 @@ jobs:
           key: perl-${{ matrix.perl }}-${{ matrix.os }}
       - run: perl -V
       - name: install needed modules
-        uses: JJ/install-with-cpanm@master
+        uses: JJ/install-with-cpanm@v1
         with:
           install: |
             Module::Build
