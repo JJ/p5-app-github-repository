@@ -15,7 +15,7 @@ jobs:
         with:
           perl-version: ${{ matrix.perl }}
       - name: Cache CPAN Modules
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: local
           key: perl-${{ matrix.perl }}-${{ matrix.os }}

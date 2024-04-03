@@ -34,6 +34,9 @@ It uses:
 - `Git`
 - `Test::Perl::Critic`
 
+As a binary dependency, `curl` needs to be installed on the system and available
+in the path
+
 
 ## COPYRIGHT AND LICENCE
 
