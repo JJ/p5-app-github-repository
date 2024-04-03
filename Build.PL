@@ -15,6 +15,7 @@ my $builder = Module::Build->new(
                  'JSON' => 0,
                  'Git' => 0,
                  'Test::Perl::Critic' => 0,
+                 'LWP::Simple' => 0,
     },
     add_to_cleanup      => [ 'App-GitHub-Repository-*' ],
 );

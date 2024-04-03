@@ -3,6 +3,7 @@ package App::GitHub::Repository;
 use warnings;
 use strict;
 use Carp;
+use LWP::Simple;
 
 use Git;
 use File::Slurper qw(read_text);
@@ -10,7 +11,6 @@ use JSON;
 use parent 'Test::Builder::Module'; # Included in Test::Simple
 
 use version; our $VERSION = qv('0.0.5');
-
 
 # Module implementation here
 
@@ -83,7 +83,7 @@ sub issues_well_closed {
 
 sub get_github {
   my $url = shift;
-  my $page = `curl -ss $url`;
+  my $page = get $url;
   croak "No pude descargar la página" if !$page;
   return $page;
 }
@@ -159,7 +159,7 @@ App::GitHub::Repository requires no configuration files or environment variables
 
 =head1 DEPENDENCIES
 
-C<git> and C<curl> need to be installed in the system before using this.
+Use C<./Build installdeps> to install all dependencies>
 
 
 =head1 INCOMPATIBILITIES
