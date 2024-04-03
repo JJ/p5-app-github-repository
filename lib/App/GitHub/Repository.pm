@@ -25,7 +25,7 @@ sub new {
 	      _user => $user,
 	      _name => $name };
   my $repo_dir =  "$tmp_dir/$user-$name";
-  `rm -rf $repo_dir` if -d $repo_dir;
+  croak "$repo_dir already exists" if -d $repo_dir;
   Git::command_oneline( ['clone', $repo, $repo_dir] );
   croak "Couldn't download repo" if !(-d $repo_dir);
   my $student_repo =  Git->repository ( Directory => $repo_dir );
