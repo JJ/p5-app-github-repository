@@ -26,10 +26,11 @@ jobs:
       - name: install needed modules
         uses: JJ/install-with-cpanm@v1
         with:
-          args: "-v --installdeps ."
-          sudo: false
-          local-lib: "~/perl5"
-      - run: perl Build.PL && ./Build
+          install: Module::Build
+      - name: Build module
+        run: perl Build.PL && ./Build
+      - name: Install with privileges
+        run: sudo ./Build installdeps
       - name: Run tests
         run: ./Build test
       - name: Run author tests for release
