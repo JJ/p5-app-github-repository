@@ -30,7 +30,11 @@ jobs:
       - name: Build module
         run: perl Build.PL && ./Build
       - name: Install with privileges
+        if: ${{ matrix.os }}  != "windows-latest" }}
         run: sudo ./Build installdeps
+      - name: Install with privileges
+        if: ${{ matrix.os }}  == "windows-latest" }}
+        run: ./Build installdeps
       - name: Run tests
         run: ./Build test
       - name: Run author tests for release
