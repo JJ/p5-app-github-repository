@@ -28,6 +28,7 @@ jobs:
         with:
           args: "--installdeps ."
           sudo: false
+          local-lib: "~/perl5"
       - run: perl Build.PL && ./Build
       - name: Run tests
         run: ./Build test
