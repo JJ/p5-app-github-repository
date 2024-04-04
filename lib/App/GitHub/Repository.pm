@@ -9,7 +9,7 @@ use File::Slurper qw(read_text);
 use JSON;
 use parent 'Test::Builder::Module'; # Included in Test::Simple
 
-use version; our $VERSION = qv('0.0.5');
+use version; our $VERSION = qv('0.0.6');
 
 # Module implementation here
 
@@ -103,7 +103,7 @@ App::GitHub::Repository - GitHub client, with some scraping functions
 
 =head1 VERSION
 
-This document describes App::GitHub::Repository version 0.0.5.1
+This document describes App::GitHub::Repository version 0.0.6
 
 
 =head1 SYNOPSIS
@@ -147,13 +147,10 @@ Auxiliary function to get a file from github
 Checks if an issue has been closed from a commit.
 
 
-=head1 DIAGNOSTICS
-
-
 =head1 CONFIGURATION AND ENVIRONMENT
 
 
-App::GitHub::Repository requires no configuration files or environment variables.
+App::GitHub::Repository requires C<curl> to be installed.
 
 
 =head1 DEPENDENCIES
@@ -167,10 +164,7 @@ Use C<./Build installdeps> to install all dependencies>
 
 None reported.
 
-
 =head1 BUGS AND LIMITATIONS
-
-No bugs have been reported.
 
 Please report any bugs or feature requests to
 C<bug-app-github-repository@rt.cpan.org>, or through the web interface at
