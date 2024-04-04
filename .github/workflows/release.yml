@@ -25,6 +25,8 @@ jobs:
       - run: perl -V
       - name: install needed modules
         uses: JJ/install-with-cpanm@v1
+        with:
+          args: "--installdeps ."
       - run: perl Build.PL && ./Build
       - name: Run tests
         run: ./Build test
