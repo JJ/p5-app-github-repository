@@ -26,13 +26,15 @@ jobs:
       - name: install needed modules
         uses: JJ/install-with-cpanm@v1
         with:
-          install: Module::Build
+          install: |
+            Module::Build
+            Test::Perl::Critic
       - name: Build module
         run: perl Build.PL && ./Build
       - name: Install with privileges
         if: matrix.os  != 'windows-latest'
         run: sudo ./Build installdeps
-      - name: Install with privileges
+      - name: Install in Windows
         if:  matrix.os  == 'windows-latest'
         run: ./Build installdeps
       - name: Run tests
