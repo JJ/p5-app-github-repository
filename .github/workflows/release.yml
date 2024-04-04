@@ -1,0 +1,32 @@
+name: Test distro for release
+on:
+  push:
+    tags:
+      - v*
+jobs:
+  build_and_test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: ["ubuntu-latest", "macos-latest", "windows-latest"]
+        perl: ["5.16","5.38", "5.34", "5.39"]
+    name: Perl ${{ matrix.perl }} on ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up perl
+        uses: shogo82148/actions-setup-perl@v1
+        with:
+          perl-version: ${{ matrix.perl }}
+      - name: Cache CPAN Modules
+        uses: actions/cache@v4
+        with:
+          path: local
+          key: perl-${{ matrix.perl }}-${{ matrix.os }}
+      - run: perl -V
+      - name: install needed modules
+        uses: JJ/install-with-cpanm@v1
+      - run: perl Build.PL && ./Build
+      - name: Run tests
+        run: ./Build test
+      - name: Run author tests for release
+        run: prove xt/
