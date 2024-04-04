@@ -25,7 +25,6 @@ jobs:
         with:
           install: |
             Module::Build
-            Test::Perl::Critic
       - run: perl Build.PL && ./Build
       - name: Install with privileges
         run: sudo ./Build installdeps
