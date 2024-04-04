@@ -109,6 +109,13 @@ This document describes App::GitHub::Repository version 0.0.6
 =head1 SYNOPSIS
 
     use App::GitHub::Repository;
+    my $repo = App::GitHub::Repository->new('https://github.com/JJ/p5-app-github-repository');
+
+    # These are tests that produce a TAP-parseable output.
+    $repo->has_readme( "Has README" );
+    $repo->has_file( ".gitignore", "Has .gitignore" );
+    $repo->has_milestones( 1, "Correct number of milestones" );
+    $repo->issues_well_closed( "Issues closed from a commit" );
 
 
 =head1 DESCRIPTION
@@ -118,31 +125,31 @@ A series of sanity checks on GitHub repositories.
 
 =head1 INTERFACE
 
-=head2 new
+=head2 new( $url, $tmp_dir = "/tmp" );
 
-Creates object with repo URL
+Creates object with repo URL. The directory can't be reused, it will croak if the directory already exists.
 
 =head2 issues_well_closed
 
-Checks that issues have been closed with a commit
+Checks that issues in the repo have been closed with a commit
 
 =head2 has_milestones
 
-Checks that has a minimum number of milestones open
+Checks that the repo has has a minimum number of milestones open
 
 =head2 has_readme
 
-Checks that the readme.md file is present
+Checks that the README.md file is present in the checked out repo
 
 =head2 has_file
 
-Checks that the repository contains a file
+Checks that the repository contains a specific file
 
 =head2 get_github
 
-Auxiliary function to get a file from github
+Auxiliary function to get a file from GitHub
 
-=head2 closes_from_commit
+=head2 closes_from_commit( $issue_id )
 
 Checks if an issue has been closed from a commit.
 
@@ -170,6 +177,10 @@ Please report any bugs or feature requests to
 C<bug-app-github-repository@rt.cpan.org>, or through the web interface at
 L<http://rt.cpan.org>.
 
+=head1 CAVEATS
+
+Will probably not work from GitHub actions, since they ban scraping from GitHub
+runners. Use with care in any other environment, for the same reason.
 
 =head1 AUTHOR
 
