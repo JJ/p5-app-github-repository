@@ -6,6 +6,7 @@ my $builder = Module::Build->new(
     dist_abstract       => 'GitHub client, with some scraping functions',
     module_name         => 'App::GitHub::Repository',
     license             => 'artistic2',
+    version             => 'v0.0.6',
     dist_author         => 'JJ Merelo <jjmerelo@gmail.com>',
     dist_version_from   => 'lib/App/GitHub/Repository.pm',
     requires => {
